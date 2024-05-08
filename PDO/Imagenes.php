@@ -1,4 +1,5 @@
 <?php
+require_once 'Conexion.php';
 
 class Imagenes
 {
@@ -54,6 +55,18 @@ class Imagenes
             die($e->getMessage());
         }
     }
+
+    public function deleteImagenPorId($idImagen)
+    { {
+            try {
+                $sql = "UPDATE imagenes SET is_active=0 WHERE id= :idImagen ";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute(array("idImagen" => $idImagen));
+            } catch (PDOException $e) {
+                die($e->getMessage());
+            }
+        }
+
+    }
 }
 
-?>
