@@ -57,16 +57,26 @@ class Imagenes
     }
 
     public function deleteImagenPorId($idImagen)
-    { {
-            try {
-                $sql = "UPDATE imagenes SET is_active=0 WHERE id= :idImagen ";
-                $stmt = $this->pdo->prepare($sql);
-                $stmt->execute(array("idImagen" => $idImagen));
-            } catch (PDOException $e) {
-                die($e->getMessage());
-            }
+    {
+        try {
+            $sql = "UPDATE imagenes SET is_active=0 WHERE id= :idImagen ";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(array("idImagen" => $idImagen));
+        } catch (PDOException $e) {
+            die($e->getMessage());
         }
+    }
 
+
+    public function activateImagenPorId($idImagen)
+    {
+        try {
+            $sql = "UPDATE imagenes SET is_active=1 WHERE id= :idImagen ";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(array("idImagen" => $idImagen));
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
     }
 }
 

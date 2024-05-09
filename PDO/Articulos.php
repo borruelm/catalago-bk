@@ -59,6 +59,16 @@ class Articulos
             die($e->getMessage());
         }
     }
+    public function activarArticuloPorId($id_articulo)
+    {
+        try {
+            $sql = "UPDATE articulos SET is_active=1 WHERE id= :id_articulo ";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(array("id_articulo" => $id_articulo));
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
 }
 
 ?>
