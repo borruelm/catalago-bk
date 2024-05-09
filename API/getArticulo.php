@@ -2,7 +2,6 @@
 header('Access-Control-Allow-Origin: *');
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once '../PDO/Conexion.php';
 require_once '../PDO/Articulos.php';
 require_once '../PDO/Imagenes.php';
 require_once '../classes/Utils.php';
