@@ -10,8 +10,6 @@ class Articulos
         $this->pdo = Conexion::conectar();
     }
 
-
-
     public function insertar($titulo, $descripcion, $created_by)
     {
         try {
