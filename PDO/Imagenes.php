@@ -24,13 +24,13 @@ class Imagenes
         }
     }
 
-    public function insertar($id_articulo, $contenido_hexadecimal, $nombre_de_la_imagen, $extension, $created_by)
+    public function insertarImagen($id_articulo, $content, $nombre_de_la_imagen, $extension, $created_by)
     {
         try {
-            $sql = "INSERT INTO imagenes (id_articulo, content, nombre_de_la_imagen, extension, created_by) VALUES (:id_articulo, :contenido_hexadecimal, :nombre_de_la_imagen, :extension, :created_by)";
+            $sql = "INSERT INTO imagenes (id_articulo, content, nombre_de_la_imagen, extension, is_active, created_by, created_on) VALUES (:id_articulo, :content, :nombre_de_la_imagen, :extension, 1, :created_by, now())";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(':id_articulo', $id_articulo);
-            $stmt->bindParam(':contenido_hexadecimal', $contenido_hexadecimal);
+            $stmt->bindParam(':content', $content);
             $stmt->bindParam(':nombre_de_la_imagen', $nombre_de_la_imagen);
             $stmt->bindParam(':extension', $extension);
             $stmt->bindParam(':created_by', $created_by);

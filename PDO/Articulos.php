@@ -58,25 +58,23 @@ class Articulos
         }
     }
 
-    public function guardarArticulo () {
+    public function guardarArticulo($titulo, $descripcion, $is_active, $created_by, $created_on)
+    {
 
-        try{
-            $sql = "INSERT INTO (titulo, descripcion, is_active, created_by, created_on, update_by, updated_on) VALUES (:titulo, :descripcion, :is_active, :created_by, :created_on, :update_by, :updated_on)";
+        try {
+            $sql = "INSERT INTO articulos (titulo, descripcion, is_active, created_by, created_on) VALUES (:titulo, :descripcion, :is_active, :created_by, :created_on)";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(':titulo', $titulo);
             $stmt->bindParam(':descripcion', $descripcion);
             $stmt->bindParam(':is_active', $is_active);
             $stmt->bindParam(':created_by', $created_by);
             $stmt->bindParam(':created_on', $created_on);
-            $stmt->bindParam(':updated_by', $updated_at);
-            $stmt->bindParam(':updated_on', $updated_on);
             $stmt->execute();
             return $this->pdo->lastInsertId();
-            } catch (PDOException $e) {
-                die($e->getMessage());
-            }   
-    
+        } catch (PDOException $e) {
+            die($e->getMessage());
         }
+    }
 }
 
 ?>
