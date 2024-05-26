@@ -14,12 +14,12 @@ $data = json_decode(file_get_contents("php://input"));
 
 try {
     if ($data->METHOD == 'POST') {
-        $idArticulo = $articulos->guardarArticulo($data->titulo, $data->descripcion, $data->is_active, $data->created_by, $data->created_on);
+        $idArticulo = $articulos->guardarArticulo($data->titulo, $data->descripcion, $data->created_by);
         //iterar arreglo
         foreach ($data->imagenes as $imagenesRow) {
-            $imagenes->insertarImagen($idArticulo, $imagenesRow->content, $imagenesRow->nombre_de_la_imagen,$imagenesRow->extencion, $imagenesRow->created_by);
+            $imagenes->insertarImagen($idArticulo, $imagenesRow->content, $imagenesRow->nombre_de_la_imagen, $imagenesRow->extencion, $imagenesRow->created_by);
         }
-    
+
         http_response_code(200);
         exit();
     }

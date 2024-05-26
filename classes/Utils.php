@@ -11,7 +11,8 @@ class Utils
             $singleImagen = array(
                 "idImagen" => $rowImagen['id'],
                 "contenido" => $rowImagen['content'],
-                "nombreImagen" => $rowImagen['nombre_de_la_imagen']
+                "nombreImagen" => $rowImagen['nombre_de_la_imagen'],
+                "is_active" => $rowImagen['is_active'],
             );
             //agregar valores a el arreglo
             array_push($arrayImagenes, $singleImagen);

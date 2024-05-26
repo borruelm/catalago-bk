@@ -69,15 +69,22 @@ class Imagenes
 
     }
 
-    public function actualizarImagen ($id, $content, $nombre_de_la_imagen, $extencion, $updated_by, $updated_on){
+    public function actualizarImagen(
+        $id,
+        $content,
+        $nombre_de_la_imagen,
+        $extension,
+        $is_active,
+        $updated_by
+    ) {
         try {
-            $sql = "UPDATE imagenes SET content=:content, nombre_de_la_imagen=:nombre_de_la_imagen, extencion=:extencion, updated_by=:updated_by, updated_on=:updated_on WHERE id=:id";
+            $sql = "UPDATE imagenes SET content=:content, nombre_de_la_imagen=:nombre_de_la_imagen, extension=:extension, is_active =:is_active, updated_by=:updated_by, updated_on= now() WHERE id=:id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(':content', $content);
             $stmt->bindParam(':nombre_de_la_imagen', $nombre_de_la_imagen);
-            $stmt->bindParam(':extencion', $extencion);
+            $stmt->bindParam(':extension', $extension);
+            $stmt->bindParam(':is_active', $is_active);
             $stmt->bindParam(':updated_by', $updated_by);
-            $stmt->bindParam(':updated_on', $updated_on);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
         } catch (PDOException $e) {

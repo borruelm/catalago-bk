@@ -1,34 +1,47 @@
 <?php
-
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin *');
+header('Content-Type: application/ Json ; charset=utf-8');
 
 include_once '../PDO/Articulos.php';
 include_once '../PDO/Imagenes.php';
 
-// Suponiendo que tienes una instancia PDO creada y conectada
-$pdo = new PDO('mysql:host=localhost;dbname=mi_basededatos', 'usuario', 'contraseña');
-
-$articulo = new Articulos();
-$imagenes = new Imagenes($pdo);
+$articulos = new Articulos();
+$imagenes = new Imagenes();
 
 $data = json_decode(file_get_contents("php://input"));
 
 try {
     if ($data->METHOD == "PUT") {
-        $id_articulo = $data->id;
-
         // Actualizar el artículo
-        $articulo->actualizarArticulo($id_articulo, $data->titulo, $data->descripcion, $data->is_active, $data->updated_by, $data->updated_on);
+        $articulos->actualizarArticulo(
+            $data->id,
+            $data->titulo,
+            $data->descripcion,
+            $data->is_active,
+            $data->updated_by
+        );
 
         // Actualizar imágenes
         foreach ($data->imagenes as $imagen) {
             if (isset($imagen->id)) {
                 // Actualizar imagen existente
-                $imagenes->actualizarImagen($imagen->id, $imagen->content, $imagen->nombre_de_la_imagen, $imagen->extencion, $imagen->updated_by, $imagen->updated_on);
+                $imagenes->actualizarImagen(
+                    $imagen->id,
+                    $imagen->content,
+                    $imagen->nombre_de_la_imagen,
+                    $imagen->extension,
+                    $imagen->is_active,
+                    $imagen->updated_by,
+                );
             } else {
                 // Insertar nueva imagen
-                $imagenes->insertarImagen($id_articulo, $imagen->content, $imagen->nombre_de_la_imagen, $imagen->extencion, $imagen->updated_by);
+                $imagenes->insertarImagen(
+                    $data->id,
+                    $imagen->content,
+                    $imagen->nombre_de_la_imagen,
+                    $imagen->extension,
+                    $imagen->created_by
+                );
             }
         }
 
