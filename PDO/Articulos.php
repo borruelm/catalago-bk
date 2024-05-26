@@ -58,17 +58,15 @@ class Articulos
         }
     }
 
-    public function guardarArticulo($titulo, $descripcion, $is_active, $created_by, $created_on)
+    public function guardarArticulo($titulo, $descripcion, $created_by)
     {
 
         try {
-            $sql = "INSERT INTO articulos (titulo, descripcion, is_active, created_by, created_on) VALUES (:titulo, :descripcion, :is_active, :created_by, :created_on)";
+            $sql = "INSERT INTO articulos (titulo, descripcion, is_active, created_by, created_on) VALUES (:titulo, :descripcion, 1, :created_by, now())";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(':titulo', $titulo);
             $stmt->bindParam(':descripcion', $descripcion);
-            $stmt->bindParam(':is_active', $is_active);
             $stmt->bindParam(':created_by', $created_by);
-            $stmt->bindParam(':created_on', $created_on);
             $stmt->execute();
             return $this->pdo->lastInsertId();
         } catch (PDOException $e) {
@@ -76,19 +74,19 @@ class Articulos
         }
     }
 
-    public function actualizarArticulo($id, $titulo, $descripcion, $is_active, $updated_by, $updated_on)
+    public function actualizarArticulo($id, $titulo, $descripcion, $is_active, $updated_by)
     {
         try {
-            $sql = "UPDATE articulos
-        SET titulo = '$titulo', descripcion = '$descripcion', is_active = '$is_active', updated_by = '$updated_by', updated_on = '$updated_on'
-        WHERE id = $id";
+            $sql = "UPDATE articulos 
+            SET titulo= :titulo, descripcion = :descripcion, is_active = :is_active, 
+            updated_by = :updated_by, updated_on = now()
+            WHERE id =:id";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->bindParam('titulo', $titulo);
-            $stmt->bindParam('descripcion', $descripcion);
-            $stmt->bindParam('is_active', $is_active);
-            $stmt->bindParam('updated_by', $updated_by);
-            $stmt->bindParam('updated_on', $updated_on);
-            stmt->bindParam(':id', $id);
+            $stmt->bindParam(':titulo', $titulo);
+            $stmt->bindParam(':descripcion', $descripcion);
+            $stmt->bindParam(':is_active', $is_active);
+            $stmt->bindParam(':updated_by', $updated_by);
+            $stmt->bindParam(':id', $id);
             $stmt->execute();
         } catch (PDOException $e) {
             die($e->getMessage());
