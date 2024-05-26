@@ -68,5 +68,22 @@ class Imagenes
         }
 
     }
+
+    public function actualizarImagen ($id, $content, $nombre_de_la_imagen, $extencion, $updated_by, $updated_on){
+        try {
+            $sql = "UPDATE imagenes SET content=:content, nombre_de_la_imagen=:nombre_de_la_imagen, extencion=:extencion, updated_by=:updated_by, updated_on=:updated_on WHERE id=:id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':content', $content);
+            $stmt->bindParam(':nombre_de_la_imagen', $nombre_de_la_imagen);
+            $stmt->bindParam(':extencion', $extencion);
+            $stmt->bindParam(':updated_by', $updated_by);
+            $stmt->bindParam(':updated_on', $updated_on);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            // Manejo del error
+            die($e->getMessage());
+        }
+    }
 }
 

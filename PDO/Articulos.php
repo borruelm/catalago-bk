@@ -75,6 +75,25 @@ class Articulos
             die($e->getMessage());
         }
     }
-}
 
-?>
+    public function actualizarArticulo($id, $titulo, $descripcion, $is_active, $updated_by, $updated_on)
+    {
+        try {
+            $sql = "UPDATE articulos
+        SET titulo = '$titulo', descripcion = '$descripcion', is_active = '$is_active', updated_by = '$updated_by', updated_on = '$updated_on'
+        WHERE id = $id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam('titulo', $titulo);
+            $stmt->bindParam('descripcion', $descripcion);
+            $stmt->bindParam('is_active', $is_active);
+            $stmt->bindParam('updated_by', $updated_by);
+            $stmt->bindParam('updated_on', $updated_on);
+            stmt->bindParam(':id', $id);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+
+    }
+}
+//Actualizar en articulo titulo, descripcion is active, updated by, updated on
